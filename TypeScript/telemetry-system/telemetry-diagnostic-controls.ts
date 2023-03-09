@@ -1,15 +1,18 @@
 import TelemetryClient from './telemetry-client';
+import TelemetryOperation from './telemetery-operations';
 
 export default class TelemetryDiagnosticControls {
 	private diagnosticChannelConnectionString: string;
 
 	private telemetryClient: TelemetryClient;
 	private diagnosticInfo: string;
+	private telemetryOperation: TelemetryOperation;
 
 	constructor() {
 		this.diagnosticChannelConnectionString = '*111#';
 		this.telemetryClient = new TelemetryClient();
 		this.diagnosticInfo = '';
+		this.telemetryOperation = new TelemetryOperation();
 	}
 
 	public readDiagnosticInfo() {
@@ -35,7 +38,7 @@ export default class TelemetryDiagnosticControls {
 			throw new Error('Unable to connect');
 		}
 
-		this.telemetryClient.send(this.telemetryClient.diagnosticMessage());
-		this.diagnosticInfo = this.telemetryClient.receive();
+		this.telemetryOperation.send(this.telemetryOperation.diagnosticMessage());
+		this.diagnosticInfo = this.telemetryOperation.receive();
 	}
 }
